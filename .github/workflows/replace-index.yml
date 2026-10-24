@@ -1,0 +1,24 @@
+name: Replace index.html
+on:
+  push:
+    paths:
+      - '.github/workflows/replace-index.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace index.html with uploaded file
+        run: |
+          ls -lh index.html wedding-reels-india-website.html
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          mv wedding-reels-india-website.html index.html
+          git add index.html
+          git add -A
+          git status --short
+          git commit -m "Replace index.html with updated website" || echo "No changes to commit"
+          git push
