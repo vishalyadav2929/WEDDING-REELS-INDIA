@@ -21,7 +21,7 @@
       "name": "Wedding Reels India",
       "slogan": "Love Stories Into Mini Movies",
       "description": "Same-day wedding BTS reel makers based in Jaipur, serving weddings all over India. Cinematic reels, real-time stories and social media management, shot on the latest iPhones.",
-      "telephone": "+91 72360 13481",
+      "telephone": ["+91 97848 55155", "+91 72360 13481"],
       "address": { "@type": "PostalAddress", "addressLocality": "Jaipur", "addressRegion": "Rajasthan", "addressCountry": "IN" },
       "areaServed": ["India", "Thailand", "Indonesia", "United Arab Emirates", "Vietnam", "Italy", "Malaysia", "Sri Lanka", "Maldives"],
       "sameAs": ["https://www.instagram.com/weddingreelsindia.co/"],
@@ -648,6 +648,79 @@
         .reel-card,.btn{transition:none}
         .reel-card:hover{transform:none}
       }
+
+      /* ---------- responsive audit pass: tap targets, header squeeze bands, small-phone type ---------- */
+      .btn{min-height:48px}
+      .all-reels{min-height:48px}
+      .topbar-cta{min-height:48px}
+      .topnav a{padding-top:12px;padding-bottom:12px}
+      details.faq summary{min-height:48px}
+      @media (min-width:1025px) and (max-width:1200px){
+        .brand-logo{width:68px;height:68px}
+        .brand-name{font-size:1.18rem;letter-spacing:.07em}
+        .brand-tag{font-size:.92rem}
+        .topnav{gap:16px}
+        .topnav a{font-size:.97rem}
+      }
+      @media (min-width:561px) and (max-width:700px){
+        .brand-logo{width:64px;height:64px}
+        .brand-name{font-size:1.12rem;letter-spacing:.06em}
+        .brand-tag{font-size:.9rem}
+        .topbar-cta{padding:11px 18px;font-size:.95rem}
+      }
+      @media (min-width:641px) and (max-width:900px){
+        .pkg-grid:not(.two) .pkg:last-child{grid-column:1/-1}
+      }
+      @media (min-width:521px) and (max-width:900px){
+        .steps .step:last-child{grid-column:1/-1}
+      }
+      @media (max-width:640px){
+        .work-card figcaption{font-size:1rem}
+      }
+      @media (max-width:480px){
+        .hero-fan .rhook{font-size:.92rem}
+        .reels-grid .rhook{font-size:1.02rem}
+      }
+      @media (max-width:400px){
+        .hero-copy h1{font-size:2.35rem}
+        .sec-head h2,.reels-head h2,.not-copy h2{font-size:2.15rem}
+        .hero-eyebrow{font-size:.62rem;letter-spacing:.09em}
+      }
+
+      /* ---------- WhatsApp number chooser (Book Now) ---------- */
+      .wa-chooser{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center}
+      .wa-chooser[hidden]{display:none}
+      body.wa-open{overflow:hidden}
+      .wa-backdrop{position:absolute;inset:0;background:rgba(22,12,8,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+      .wa-sheet{
+        position:relative;background:var(--paper);width:100%;max-width:440px;
+        border-radius:22px 22px 0 0;padding:26px 22px calc(24px + env(safe-area-inset-bottom));
+        box-shadow:0 -18px 50px rgba(42,8,16,.35);animation:wa-up .22s ease;
+      }
+      .wa-sheet h3{font-size:1.55rem;color:var(--ink);margin:0 48px 6px 0}
+      .wa-close{
+        position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;
+        border:1px solid var(--line);background:var(--cream);color:var(--ink);
+        font-size:1.35rem;line-height:1;cursor:pointer;display:grid;place-items:center;
+      }
+      .wa-close:hover{background:var(--gold-soft)}
+      .wa-opt{
+        display:flex;align-items:center;gap:14px;margin-top:12px;padding:15px 18px;min-height:64px;
+        border:1.5px solid var(--line);border-radius:16px;text-decoration:none;
+        background:var(--cream);color:var(--ink);
+        transition:border-color .15s ease, background .15s ease;
+      }
+      .wa-opt:hover,.wa-opt:focus-visible{border-color:var(--wa);background:#EFF8F1;outline:none}
+      .wa-opt svg{width:27px;height:27px;flex:none;fill:var(--wa)}
+      .wa-opt .wa-num{display:block;font-weight:700;font-size:1.16rem;line-height:1.25}
+      .wa-opt .wa-lab{display:block;font-size:.86rem;color:var(--ink-soft)}
+      @media (min-width:640px){
+        .wa-chooser{align-items:center;padding:20px}
+        .wa-sheet{border-radius:22px;animation:wa-pop .18s ease}
+      }
+      @keyframes wa-up{from{transform:translateY(26px);opacity:.4}to{transform:none;opacity:1}}
+      @keyframes wa-pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+      @media (prefers-reduced-motion: reduce){.wa-sheet{animation:none}}
     </style>
   </head>
   <body>
@@ -667,7 +740,7 @@
             <a href="#locations">Locations</a>
             <a href="#faq">FAQ</a>
           </nav>
-          <a class="btn btn-dark topbar-cta" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20Meri%20wedding%20date%20check%20karni%20hai." target="_blank" rel="noopener">Book Now</a>
+          <a class="btn btn-dark topbar-cta" href="#book-now" data-book data-msg="Hi Wedding Reels India! Meri wedding date check karni hai.">Book Now</a>
         </div>
         <div class="hero-grid">
           <div class="hero-copy">
@@ -677,7 +750,7 @@
             <p class="pitch">The photographer makes the album — we make <strong>the 40 seconds the whole internet watches</strong>. Haldi fun, baraat noise, bidaai tears — the wedding's real moments, shot on the latest iPhones and <strong>turned into a reel the same day</strong>, straight to your phone. Based in <strong>Jaipur</strong>, we travel all over India to wherever your wedding is.</p>
             <p class="hero-seo">Wedding Reel Maker in Jaipur · Same-Day Wedding BTS Reels — All India</p>
             <div class="hero-ctas">
-              <a class="btn btn-dark" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20Meri%20wedding%20date%20check%20karni%20hai." target="_blank" rel="noopener">Book Now →</a>
+              <a class="btn btn-dark" href="#book-now" data-book data-msg="Hi Wedding Reels India! Meri wedding date check karni hai.">Book Now →</a>
               <a class="btn btn-light" href="#reels">See the Work</a>
             </div>
             <div class="hero-badges">
@@ -821,7 +894,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>We work alongside your photographer, never stepping into their frame</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>The first reel the same day — while your guests are still at the wedding</li>
             </ul>
-            <a class="btn btn-wa" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20Meri%20wedding%20date%20check%20karni%20hai." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-wa" href="#book-now" data-book data-msg="Hi Wedding Reels India! Meri wedding date check karni hai.">Book Now</a>
           </div>
         </div>
 
@@ -1025,7 +1098,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Unlimited Real-Time Stories</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Social Media Management</li>
             </ul>
-            <a class="btn btn-line" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20I%27d%20like%20to%20book%20the%20Silver%20Story%20package%20(%E2%82%B925%2C000%2C%202%20days)." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-line" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book the Silver Story package (₹25,000, 2 days).">Book Now</a>
           </article>
 
           <article class="pkg top">
@@ -1038,7 +1111,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Unlimited Real-Time Stories</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Social Media Management</li>
             </ul>
-            <a class="btn btn-gold" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20I%27d%20like%20to%20book%20the%20Golden%20Story%20package%20(%E2%82%B950%2C000%2C%202%20days)." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-gold" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book the Golden Story package (₹50,000, 2 days).">Book Now</a>
           </article>
 
           <article class="pkg">
@@ -1051,7 +1124,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Unlimited Real-Time Stories</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Social Media Management</li>
             </ul>
-            <a class="btn btn-line" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20I%27d%20like%20to%20book%20the%20Royal%20Story%20package%20(%E2%82%B970%2C000%2C%202%20days)." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-line" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book the Royal Story package (₹70,000, 2 days).">Book Now</a>
           </article>
         </div>
 
@@ -1066,7 +1139,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Unlimited Real-Time Stories</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Social Media Management</li>
             </ul>
-            <a class="btn btn-line" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20I%27d%20like%20to%20book%20the%20Royal%20Heritage%20package%20(%E2%82%B975%2C000%2C%203%20days)." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-line" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book the Royal Heritage package (₹75,000, 3 days).">Book Now</a>
           </article>
 
           <article class="pkg">
@@ -1079,7 +1152,7 @@
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Unlimited Real-Time Stories</li>
               <li><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg>Social Media Management</li>
             </ul>
-            <a class="btn btn-line" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20I%27d%20like%20to%20book%20the%20Legacy%20Luxury%20package%20(%E2%82%B990%2C000%2C%203%20days)." target="_blank" rel="noopener">Book Now</a>
+            <a class="btn btn-line" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book the Legacy Luxury package (₹90,000, 3 days).">Book Now</a>
           </article>
         </div>
 
@@ -1344,7 +1417,7 @@
             </div>
           </div>
           <div class="enquiry-cta">
-            <a class="btn" id="enquiryBtn" href="https://wa.me/917236013481" target="_blank" rel="noopener">
+            <a class="btn" id="enquiryBtn" href="#book-now" data-book data-msg="Hi Wedding Reels India! I'd like to book same-day wedding reels.">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:20px;height:20px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
               Book Now on WhatsApp
             </a>
@@ -1362,7 +1435,7 @@
         <p class="f-tag">Love Stories Into Mini Movies</p>
         <p class="f-sub">A wedding lasts a day — a reel lasts forever. Lock your date today.</p>
         <div class="f-ctas">
-          <a class="btn btn-wa" href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20Meri%20wedding%20date%20check%20karni%20hai." target="_blank" rel="noopener">
+          <a class="btn btn-wa" href="#book-now" data-book data-msg="Hi Wedding Reels India! Meri wedding date check karni hai.">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
             Book Now on WhatsApp
           </a>
@@ -1372,8 +1445,8 @@
           </a>
         </div>
         <div class="f-contact">
-          <div><span class="lbl">WhatsApp / Call</span><a href="https://wa.me/917236013481" target="_blank" rel="noopener">+91 72360 13481</a></div>
-          <div><span class="lbl">Phone</span><a href="tel:+919784855155">+91 97848 55155</a></div>
+          <div><span class="lbl">WhatsApp</span><a href="https://wa.me/919784855155" target="_blank" rel="noopener">+91 97848 55155</a></div>
+          <div><span class="lbl">WhatsApp</span><a href="https://wa.me/917236013481" target="_blank" rel="noopener">+91 72360 13481</a></div>
           <div><span class="lbl">Instagram</span><a href="https://www.instagram.com/weddingreelsindia.co/" target="_blank" rel="noopener">@weddingreelsindia.co</a></div>
           <div><span class="lbl">Based In</span><a href="#locations">Jaipur · Weddings All Over India</a></div>
         </div>
@@ -1381,9 +1454,26 @@
       </div>
     </footer>
 
+    <!-- WhatsApp number chooser — opened by every Book Now button -->
+    <div class="wa-chooser" id="waChooser" hidden role="dialog" aria-modal="true" aria-labelledby="waChooserTitle">
+      <div class="wa-backdrop" data-close></div>
+      <div class="wa-sheet">
+        <button type="button" class="wa-close" data-close aria-label="Close number chooser">×</button>
+        <h3 id="waChooserTitle">Chat on WhatsApp</h3>
+        <a class="wa-opt" id="waOpt1" href="https://wa.me/919784855155" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
+          <span><span class="wa-num">+91 97848 55155</span><span class="wa-lab">WhatsApp — tap to chat</span></span>
+        </a>
+        <a class="wa-opt" id="waOpt2" href="https://wa.me/917236013481" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
+          <span><span class="wa-num">+91 72360 13481</span><span class="wa-lab">WhatsApp — tap to chat</span></span>
+        </a>
+      </div>
+    </div>
+
     <!-- sticky mobile CTA -->
     <div class="sticky-cta">
-      <a href="https://wa.me/917236013481?text=Hi%20Wedding%20Reels%20India!%20Meri%20wedding%20date%20check%20karni%20hai." target="_blank" rel="noopener">
+      <a href="#book-now" data-book data-msg="Hi Wedding Reels India! Meri wedding date check karni hai.">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
         Book Now on WhatsApp
       </a>
@@ -1417,7 +1507,7 @@
                     "• Wedding month: " + state.month + "\n" +
                     "• City: " + state.city + "\n" +
                     "Please confirm my date is available.";
-          document.getElementById("enquiryBtn").href = WA + "?text=" + encodeURIComponent(msg);
+          document.getElementById("enquiryBtn").setAttribute("data-msg", msg);
         }
 
         function wire(id, key) {
@@ -1436,6 +1526,51 @@
         wire("monthChips", "month");
         wire("cityChips", "city");
         compose();
+      })();
+    </script>
+    <script>
+      /* Book Now -> WhatsApp number chooser: 97848 55155 first, 72360 13481 second.
+         Each Book Now button carries its own prefilled message in data-msg;
+         whichever number the visitor picks gets that same message. */
+      (function () {
+        var chooser = document.getElementById("waChooser");
+        if (!chooser) return;
+        var opt1 = document.getElementById("waOpt1");
+        var opt2 = document.getElementById("waOpt2");
+        var NUM1 = "919784855155";
+        var NUM2 = "917236013481";
+        var lastFocus = null;
+
+        function openChooser(msg, opener) {
+          var enc = encodeURIComponent(msg || "");
+          opt1.href = "https://wa.me/" + NUM1 + "?text=" + enc;
+          opt2.href = "https://wa.me/" + NUM2 + "?text=" + enc;
+          lastFocus = opener || document.activeElement;
+          chooser.hidden = false;
+          document.body.classList.add("wa-open");
+          var closeBtn = chooser.querySelector(".wa-close");
+          if (closeBtn) closeBtn.focus();
+        }
+        function closeChooser() {
+          if (chooser.hidden) return;
+          chooser.hidden = true;
+          document.body.classList.remove("wa-open");
+          if (lastFocus && lastFocus.focus) lastFocus.focus();
+        }
+
+        document.addEventListener("click", function (e) {
+          var trigger = e.target.closest("[data-book]");
+          if (trigger) {
+            e.preventDefault();
+            openChooser(trigger.getAttribute("data-msg") || "", trigger);
+            return;
+          }
+          if (e.target.closest("[data-close]")) { closeChooser(); return; }
+          if (e.target.closest(".wa-opt")) { closeChooser(); }
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeChooser();
+        });
       })();
     </script>
   </body>
