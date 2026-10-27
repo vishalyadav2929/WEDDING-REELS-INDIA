@@ -1843,9 +1843,6 @@
         var NUM1 = "919784855155";
         var NUM2 = "917236013481";
         var LEAD_URL = "https://script.google.com/macros/s/AKfycbxR01IG8n8gjBW_hXF7g5jcW9I0APE2wkyJY8s3oreU4Pjrm7u3GWWSvKsHo_vOGZxA/exec";
-        var submitBtn = document.getElementById("leadSubmit");
-        var submitLabel = document.getElementById("leadSubmitLabel");
-        var saving = false;
         var lastFocus = null;
         var baseMsg = "";
         var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1894,45 +1891,34 @@
           return "";
         }
 
-        /* Save the lead to the shared WRI Leads sheet BEFORE WhatsApp opens.
-           Form-encoded POST to the Apps Script web app. The promise always
-           resolves: success, failure or a 5-second timeout all continue to
-           the number chooser, so a slow or failed save never blocks the
-           client from reaching WhatsApp. */
+        /* Save the lead to the shared WRI Leads sheet — fire-and-forget.
+           Form-encoded POST to the Apps Script web app, dispatched the
+           moment the form is submitted but never awaited: the number
+           chooser shows instantly, and fetch keepalive lets the save
+           finish even if the client taps through to WhatsApp right away. */
         function saveLead(data) {
-          return new Promise(function (resolve) {
-            var done = false;
-            function fin() { if (!done) { done = true; resolve(); } }
-            var params = new URLSearchParams();
-            params.append("name", data.name);
-            params.append("mobile", data.mobile);
-            params.append("event", data.event);
-            params.append("dateFrom", data.dateFrom);
-            params.append("dateTo", data.dateTo);
-            params.append("state", data.state);
-            params.append("city", data.city);
-            params.append("package", data.pkg);
-            params.append("source", "Website");
-            var ctrl = ("AbortController" in window) ? new AbortController() : null;
-            var timer = setTimeout(function () {
-              if (ctrl) { try { ctrl.abort(); } catch (err) {} }
-              fin();
-            }, 5000);
-            try {
-              fetch(LEAD_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body: params,
-                signal: ctrl ? ctrl.signal : undefined
-              }).then(function () { clearTimeout(timer); fin(); },
-                      function () { clearTimeout(timer); fin(); });
-            } catch (err) { clearTimeout(timer); fin(); }
-          });
+          var params = new URLSearchParams();
+          params.append("name", data.name);
+          params.append("mobile", data.mobile);
+          params.append("event", data.event);
+          params.append("dateFrom", data.dateFrom);
+          params.append("dateTo", data.dateTo);
+          params.append("state", data.state);
+          params.append("city", data.city);
+          params.append("package", data.pkg);
+          params.append("source", "Website");
+          try {
+            fetch(LEAD_URL, {
+              method: "POST",
+              mode: "no-cors",
+              body: params,
+              keepalive: true
+            }).catch(function () {});
+          } catch (err) {}
         }
 
         if (form) form.addEventListener("submit", function (e) {
           e.preventDefault();
-          if (saving) return;
           errBox.textContent = ""; errBox.classList.remove("show");
           var nameEl = document.getElementById("leadName");
           var phoneEl = document.getElementById("leadPhone");
@@ -1984,23 +1970,17 @@
           s.innerHTML = "<strong>" + name.replace(/</g, "&lt;") + "</strong> · " + ev.replace(/</g, "&lt;") + "<br>" + dateLine + " · " + city.replace(/</g, "&lt;") + ", " + st.replace(/</g, "&lt;");
           summary.appendChild(s);
 
-          /* Save first (max ~5s, never blocks), THEN show the number chooser:
+          /* Dispatch the save in the background (keepalive, never awaited),
+             then show the number chooser instantly:
              97848 55155 first, 72360 13481 second — the client picks. */
-          saving = true;
-          if (submitBtn) { submitBtn.disabled = true; }
-          if (submitLabel) { submitLabel.textContent = "Saving your details…"; }
           var pkgVal = ctx ? ctx.replace(/^Package:\s*/, "") : "";
           saveLead({
             name: name, mobile: digits, event: ev,
             dateFrom: from, dateTo: to, state: st, city: city, pkg: pkgVal
-          }).then(function () {
-            saving = false;
-            if (submitBtn) { submitBtn.disabled = false; }
-            if (submitLabel) { submitLabel.textContent = "Send on WhatsApp"; }
-            showStep(2);
-            var firstOpt = document.getElementById("waOpt1");
-            if (firstOpt) firstOpt.focus();
           });
+          showStep(2);
+          var firstOpt = document.getElementById("waOpt1");
+          if (firstOpt) firstOpt.focus();
         });
 
         var editBtn = document.getElementById("leadEdit");
