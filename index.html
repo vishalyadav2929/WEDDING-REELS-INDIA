@@ -764,6 +764,36 @@
       @keyframes wa-pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
       @media (prefers-reduced-motion: reduce){.wa-sheet{animation:none}}
 
+      /* ---------- lead form (Book Now, before WhatsApp) ---------- */
+      .wa-sheet{max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+      .wa-sub{margin:0 34px 4px 0;color:var(--ink-soft);font-size:.95rem;line-height:1.5}
+      .lead-form{display:grid;gap:13px;margin-top:16px}
+      .lf-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+      @media (max-width:420px){.lf-row{grid-template-columns:1fr}}
+      .lf-field{display:grid;gap:6px;min-width:0}
+      .lf-field label{font-family:"Geist Mono",ui-monospace,monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+      .lf-field label b{color:var(--maroon)}
+      .lf-field input,.lf-field select{
+        width:100%;min-height:50px;padding:12px 13px;border:1.5px solid var(--line);border-radius:12px;
+        background:var(--cream);color:var(--ink);font:inherit;font-size:1rem;line-height:1.3;
+      }
+      .lf-field input:focus,.lf-field select:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold);background:var(--paper)}
+      .lf-error{display:none;background:#FBEAEA;border:1px solid #E3A6A6;color:#7A1220;border-radius:12px;padding:11px 13px;font-size:.92rem;line-height:1.45}
+      .lf-error.show{display:block}
+      .lf-submit{
+        width:100%;justify-content:center;background:var(--wa);color:#fff;border:none;cursor:pointer;
+        box-shadow:0 14px 30px -12px rgba(15,107,58,.6);min-height:54px;margin-top:2px;
+      }
+      .lf-submit:hover{background:var(--wa-deep)}
+      .lf-note{margin:0;text-align:center;font-size:.86rem;color:var(--ink-soft)}
+      .lead-summary{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px;font-size:.95rem;line-height:1.55;color:var(--ink-soft)}
+      .lead-summary strong{color:var(--ink)}
+      .lead-edit{
+        margin-top:14px;width:100%;min-height:48px;border:1.5px solid var(--line);background:transparent;color:var(--ink);
+        border-radius:999px;font:inherit;font-weight:600;cursor:pointer;
+      }
+      .lead-edit:hover{background:var(--gold-soft)}
+
       /* ---------- city pages (hash-routed views: #/cities, #/city/<slug>) ---------- */
       [hidden]{display:none!important}
       a.chip{text-decoration:none;transition:border-color .15s ease, background .15s ease}
@@ -1517,7 +1547,7 @@
         <div class="sec-head center">
           <p class="kicker center">Book in 3 Taps</p>
           <h2>Plan your date <em>in three taps</em></h2>
-          <p>Pick a package, a month and a city — your WhatsApp message is written for you. No forms, no typing.</p>
+          <p>Pick a package, a month and a city — then add your name, number and event dates, and your WhatsApp message is written for you.</p>
         </div>
         <div class="enquiry-card">
           <div class="egroup">
@@ -1554,7 +1584,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:20px;height:20px"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
               Book Now on WhatsApp
             </a>
-            <p class="enote">Opens WhatsApp with your three picks already written — just press send.</p>
+            <p class="enote">Next, a quick details form — then WhatsApp opens with everything already written. Just press send.</p>
           </div>
         </div>
       </div>
@@ -1651,8 +1681,73 @@
     <div class="wa-chooser" id="waChooser" hidden role="dialog" aria-modal="true" aria-labelledby="waChooserTitle">
       <div class="wa-backdrop" data-close></div>
       <div class="wa-sheet">
-        <button type="button" class="wa-close" data-close aria-label="Close number chooser">×</button>
-        <h3 id="waChooserTitle">Chat on WhatsApp</h3>
+        <button type="button" class="wa-close" data-close aria-label="Close booking form">×</button>
+
+        <!-- Step 1: lead details, collected before WhatsApp opens -->
+        <div id="leadStep">
+          <h3 id="waChooserTitle">Book Your Date</h3>
+          <p class="wa-sub">Fill these quick details first — your WhatsApp message will open fully ready, so you won't need to type or explain anything again.</p>
+          <form class="lead-form" id="leadForm" novalidate>
+            <div class="lf-row">
+              <div class="lf-field">
+                <label for="leadName">Your Name <b>*</b></label>
+                <input id="leadName" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Sharma" required />
+              </div>
+              <div class="lf-field">
+                <label for="leadPhone">Mobile Number <b>*</b></label>
+                <input id="leadPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile number" required />
+              </div>
+            </div>
+            <div class="lf-field">
+              <label for="leadEvent">Booking For — Event Name <b>*</b></label>
+              <select id="leadEvent" name="event" required>
+                <option value="">Select event…</option>
+                <option>Wedding</option>
+                <option>Wedding + All Functions</option>
+                <option>Engagement / Ring Ceremony</option>
+                <option>Haldi</option>
+                <option>Mehndi</option>
+                <option>Sangeet</option>
+                <option>Reception</option>
+                <option>Pre-Wedding</option>
+                <option>Other Event</option>
+              </select>
+            </div>
+            <div class="lf-row">
+              <div class="lf-field">
+                <label for="leadFrom">Event Date — From <b>*</b></label>
+                <input id="leadFrom" name="from" type="date" required />
+              </div>
+              <div class="lf-field">
+                <label for="leadTo">Event Date — To <b>*</b></label>
+                <input id="leadTo" name="to" type="date" required />
+              </div>
+            </div>
+            <p class="lf-note" style="text-align:left">Single-day event? Pick the same date in both fields.</p>
+            <div class="lf-row">
+              <div class="lf-field">
+                <label for="leadState">State <b>*</b></label>
+                <select id="leadState" name="state" required>
+                  <option value="">Select state…</option>
+                  <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Andaman and Nicobar Islands</option><option>Chandigarh</option><option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi (NCT)</option><option>Jammu and Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option><option>Outside India</option>
+                </select>
+              </div>
+              <div class="lf-field">
+                <label for="leadCity">City <b>*</b></label>
+                <input id="leadCity" name="city" type="text" autocomplete="address-level2" placeholder="e.g. Jaipur" required />
+              </div>
+            </div>
+            <p class="lf-error" id="leadError" role="alert"></p>
+            <button type="submit" class="btn lf-submit">Continue to WhatsApp →</button>
+            <p class="lf-note">Next step: pick a WhatsApp number — your full message will already be written there.</p>
+          </form>
+        </div>
+
+        <!-- Step 2: existing number chooser, links now carry the ready message -->
+        <div id="waStep" hidden>
+          <h3>Chat on WhatsApp</h3>
+          <p class="wa-sub">Your booking message is ready with all your details. Pick a number — just press send on WhatsApp.</p>
+          <div class="lead-summary" id="leadSummary"></div>
         <a class="wa-opt" id="waOpt1" href="https://wa.me/919784855155" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
           <span><span class="wa-num">+91 97848 55155</span><span class="wa-lab">WhatsApp — tap to chat</span></span>
@@ -1661,6 +1756,8 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
           <span><span class="wa-num">+91 72360 13481</span><span class="wa-lab">WhatsApp — tap to chat</span></span>
         </a>
+          <button type="button" class="lead-edit" id="leadEdit">← Edit my details</button>
+        </div>
       </div>
     </div>
 
@@ -1722,27 +1819,42 @@
       })();
     </script>
     <script>
-      /* Book Now -> WhatsApp number chooser: 97848 55155 first, 72360 13481 second.
-         Each Book Now button carries its own prefilled message in data-msg;
-         whichever number the visitor picks gets that same message. */
+      /* Book Now -> lead form FIRST, then WhatsApp number chooser.
+         The form collects name, mobile, state, city, event name and the
+         event date range (From–To). On submit a ready-to-send WhatsApp
+         message is composed with all those details (plus any package /
+         city context from the clicked button's data-msg) and attached to
+         both numbers: 97848 55155 first, 72360 13481 second. */
       (function () {
         var chooser = document.getElementById("waChooser");
         if (!chooser) return;
         var opt1 = document.getElementById("waOpt1");
         var opt2 = document.getElementById("waOpt2");
+        var leadStep = document.getElementById("leadStep");
+        var waStep = document.getElementById("waStep");
+        var form = document.getElementById("leadForm");
+        var errBox = document.getElementById("leadError");
+        var summary = document.getElementById("leadSummary");
         var NUM1 = "919784855155";
         var NUM2 = "917236013481";
         var lastFocus = null;
+        var baseMsg = "";
+        var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+        function showStep(step) {
+          leadStep.hidden = step !== 1;
+          waStep.hidden = step !== 2;
+          chooser.querySelector(".wa-sheet").scrollTop = 0;
+        }
         function openChooser(msg, opener) {
-          var enc = encodeURIComponent(msg || "");
-          opt1.href = "https://wa.me/" + NUM1 + "?text=" + enc;
-          opt2.href = "https://wa.me/" + NUM2 + "?text=" + enc;
+          baseMsg = msg || "";
           lastFocus = opener || document.activeElement;
+          if (errBox) { errBox.textContent = ""; errBox.classList.remove("show"); }
+          showStep(1);
           chooser.hidden = false;
           document.body.classList.add("wa-open");
-          var closeBtn = chooser.querySelector(".wa-close");
-          if (closeBtn) closeBtn.focus();
+          var first = document.getElementById("leadName");
+          if (first) setTimeout(function () { first.focus(); }, 60);
         }
         function closeChooser() {
           if (chooser.hidden) return;
@@ -1750,6 +1862,89 @@
           document.body.classList.remove("wa-open");
           if (lastFocus && lastFocus.focus) lastFocus.focus();
         }
+        function fmtDate(v) {
+          var p = (v || "").split("-");
+          if (p.length !== 3) return v;
+          var d = new Date(+p[0], +p[1] - 1, +p[2]);
+          return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+        }
+        function fail(msg, field) {
+          errBox.textContent = msg;
+          errBox.classList.add("show");
+          if (field) field.focus();
+          return false;
+        }
+        function packageContext() {
+          if (!baseMsg) return "";
+          var lines = baseMsg.split("\n");
+          for (var i = 0; i < lines.length; i++) {
+            if (lines[i].indexOf("Package:") !== -1) return lines[i].replace(/^[•\s]+/, "").trim();
+          }
+          var m = baseMsg.match(/book the (.+?) package \(([^)]+)\)/i);
+          if (m) return "Package: " + m[1] + " (" + m[2] + ")";
+          return "";
+        }
+
+        if (form) form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          errBox.textContent = ""; errBox.classList.remove("show");
+          var nameEl = document.getElementById("leadName");
+          var phoneEl = document.getElementById("leadPhone");
+          var eventEl = document.getElementById("leadEvent");
+          var fromEl = document.getElementById("leadFrom");
+          var toEl = document.getElementById("leadTo");
+          var stateEl = document.getElementById("leadState");
+          var cityEl = document.getElementById("leadCity");
+
+          var name = nameEl.value.trim();
+          if (name.length < 2) return fail("Please enter your name.", nameEl);
+          var digits = phoneEl.value.replace(/\D/g, "");
+          if (digits.length === 12 && digits.indexOf("91") === 0) digits = digits.slice(2);
+          if (digits.length === 11 && digits.charAt(0) === "0") digits = digits.slice(1);
+          if (!/^[6-9]\d{9}$/.test(digits)) return fail("Please enter a valid 10-digit mobile number.", phoneEl);
+          var ev = eventEl.value;
+          if (!ev) return fail("Please select the event you are booking for.", eventEl);
+          var from = fromEl.value, to = toEl.value;
+          if (!from) return fail("Please pick the event start date (From).", fromEl);
+          if (!to) return fail("Please pick the event end date (To) — for a single day, pick the same date again.", toEl);
+          if (to < from) return fail("The To date cannot be before the From date. Please check your dates.", toEl);
+          var st = stateEl.value;
+          if (!st) return fail("Please select your state.", stateEl);
+          var city = cityEl.value.trim();
+          if (city.length < 2) return fail("Please enter your city.", cityEl);
+
+          var fromD = new Date(from + "T00:00:00"), toD = new Date(to + "T00:00:00");
+          var days = Math.round((toD - fromD) / 86400000) + 1;
+          var dateLine = (from === to)
+            ? fmtDate(from) + " (1 day)"
+            : fmtDate(from) + " to " + fmtDate(to) + " (" + days + (days === 1 ? " day" : " days") + ")";
+
+          var msg = "Hi Wedding Reels India! I'd like to make a booking.\n\n" +
+            "Name: " + name + "\n" +
+            "Mobile: " + digits + "\n" +
+            "Booking For (Event): " + ev + "\n" +
+            "Event Dates: " + dateLine + "\n" +
+            "City: " + city + "\n" +
+            "State: " + st + "\n";
+          var ctx = packageContext();
+          if (ctx) msg += ctx + "\n";
+          msg += "\nPlease confirm if my date is available.";
+
+          var enc = encodeURIComponent(msg);
+          opt1.href = "https://wa.me/" + NUM1 + "?text=" + enc;
+          opt2.href = "https://wa.me/" + NUM2 + "?text=" + enc;
+          summary.innerHTML = "";
+          var s = document.createElement("span");
+          s.innerHTML = "<strong>" + name.replace(/</g, "&lt;") + "</strong> · " + ev.replace(/</g, "&lt;") + "<br>" + dateLine + " · " + city.replace(/</g, "&lt;") + ", " + st.replace(/</g, "&lt;");
+          summary.appendChild(s);
+          showStep(2);
+          var editBtn = document.getElementById("leadEdit");
+          var firstOpt = document.getElementById("waOpt1");
+          if (firstOpt) firstOpt.focus();
+        });
+
+        var editBtn = document.getElementById("leadEdit");
+        if (editBtn) editBtn.addEventListener("click", function () { showStep(1); });
 
         document.addEventListener("click", function (e) {
           var trigger = e.target.closest("[data-book]");
