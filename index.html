@@ -1741,6 +1741,10 @@
                 <input id="leadCity" name="city" type="text" autocomplete="address-level2" placeholder="e.g. Jaipur" required />
               </div>
             </div>
+            <div class="lf-field">
+              <label for="leadVenue">Venue / Location</label>
+              <input id="leadVenue" name="venue" type="text" placeholder="e.g. Palace, hotel or farmhouse name" />
+            </div>
             <p class="lf-error" id="leadError" role="alert"></p>
             <button type="submit" class="btn lf-submit" id="leadSubmit">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2zm0 18.03a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.08 8.08 0 0 1-1.24-4.28c0-4.47 3.64-8.1 8.15-8.1 4.47 0 8.1 3.63 8.1 8.1 0 4.5-3.63 8.12-8.1 8.12zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.25-.63.79-.77.97-.14.18-.29.2-.53.08-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.69-.14-.24-.02-.38.11-.5.11-.11.24-.29.37-.43.12-.15.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.84-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.37 1 2.53.12.16 1.73 2.64 4.19 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.44-.58 1.77-1.14.33-.56.33-1.04.23-1.14-.1-.1-.22-.16-.47-.28z"/></svg>
@@ -1907,6 +1911,7 @@
           params.append("dateTo", data.dateTo);
           params.append("state", data.state);
           params.append("city", data.city);
+          params.append("venue", data.venue || "");
           params.append("package", data.pkg);
           params.append("source", "Website");
           try {
@@ -1929,6 +1934,7 @@
           var toEl = document.getElementById("leadTo");
           var stateEl = document.getElementById("leadState");
           var cityEl = document.getElementById("leadCity");
+          var venueEl = document.getElementById("leadVenue");
 
           var name = nameEl.value.trim();
           if (name.length < 2) return fail("Please enter your name.", nameEl);
@@ -1946,6 +1952,7 @@
           if (!st) return fail("Please select your state.", stateEl);
           var city = cityEl.value.trim();
           if (city.length < 2) return fail("Please enter your city.", cityEl);
+          var venue = venueEl ? venueEl.value.trim() : "";
 
           var fromD = new Date(from + "T00:00:00"), toD = new Date(to + "T00:00:00");
           var days = Math.round((toD - fromD) / 86400000) + 1;
@@ -1960,6 +1967,7 @@
             "Event Dates: " + dateLine + "\n" +
             "City: " + city + "\n" +
             "State: " + st + "\n";
+          if (venue) msg += "Venue: " + venue + "\n";
           var ctx = packageContext();
           if (ctx) msg += ctx + "\n";
           msg += "\nPlease confirm if my date is available.";
@@ -1978,7 +1986,7 @@
           var pkgVal = ctx ? ctx.replace(/^Package:\s*/, "") : "";
           saveLead({
             name: name, mobile: digits, event: ev,
-            dateFrom: from, dateTo: to, state: st, city: city, pkg: pkgVal
+            dateFrom: from, dateTo: to, state: st, city: city, venue: venue, pkg: pkgVal
           });
           showStep(2);
           var firstOpt = document.getElementById("waOpt1");
