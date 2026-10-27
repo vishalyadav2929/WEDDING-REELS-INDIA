@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://weddingreelsindia.netlify.app/sitemap.xml
